@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Company>SAMER Hub</Company>
+    <Product>SAMER Hub Desktop</Product>
+    <Authors>Samet Er</Authors>
+  </PropertyGroup>
+</Project>
