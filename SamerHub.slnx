@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SamerHub.Core/SamerHub.Core.csproj" />
+    <Project Path="src/SamerHub.Desktop/SamerHub.Desktop.csproj" />
+    <Project Path="src/SamerHub.Infrastructure/SamerHub.Infrastructure.csproj" />
+    <Project Path="src/SamerHub.Platforms/SamerHub.Platforms.csproj" />
+    <Project Path="src/SamerHub.Pos/SamerHub.Pos.csproj" />
+    <Project Path="src/SamerHub.Fiscal/SamerHub.Fiscal.csproj" />
+    <Project Path="src/SamerHub.Printing/SamerHub.Printing.csproj" />
+    <Project Path="src/SamerHub.Service/SamerHub.Service.csproj" />
+  </Folder>
+</Solution>

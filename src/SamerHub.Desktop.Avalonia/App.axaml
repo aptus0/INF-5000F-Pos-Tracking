@@ -1,0 +1,37 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:fluent="clr-namespace:Avalonia.Themes.Fluent;assembly=Avalonia.Themes.Fluent"
+             x:Class="SamerHub.Desktop.Avalonia.App">
+  <Application.Styles>
+    <fluent:FluentTheme />
+    <Style Selector="Window">
+      <Setter Property="Background" Value="#F8F7F3" />
+      <Setter Property="FontFamily" Value="Aptos, Segoe UI, sans-serif" />
+    </Style>
+    <Style Selector="Border.card">
+      <Setter Property="Background" Value="White" />
+      <Setter Property="CornerRadius" Value="18" />
+      <Setter Property="Padding" Value="18" />
+      <Setter Property="BorderBrush" Value="#ECE7DF" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="TextBlock.sectionTitle">
+      <Setter Property="FontSize" Value="24" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Foreground" Value="#22313F" />
+    </Style>
+    <Style Selector="Button.primary">
+      <Setter Property="Background" Value="#FF7A00" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="CornerRadius" Value="12" />
+      <Setter Property="Padding" Value="16,10" />
+    </Style>
+    <Style Selector="TabControl.topnav > TabItem">
+      <Setter Property="FontSize" Value="15" />
+      <Setter Property="Padding" Value="18,12" />
+    </Style>
+    <Style Selector="TabControl.settingsnav > TabItem">
+      <Setter Property="Padding" Value="16,10" />
+    </Style>
+  </Application.Styles>
+</Application>
