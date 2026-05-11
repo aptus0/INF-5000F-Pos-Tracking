@@ -25,6 +25,11 @@ SAMER Hub’ın amacı işletmedeki tüm satış kanallarını tek merkezde topl
 
 ---
 
+![Ekran Resmi 1](/im1.png)
+![Ekran Resmi 1](/imm.png)
+![Ekran Resmi 1](/im.png)
+![Ekran Resmi 1](/ınego.jpg)
+
 ## Kullanılan Resmi / Teknik Dokümanlar
 
 Proje tasarımında aşağıdaki dokümanlardaki iş kuralları ve cihaz davranışları dikkate alınmıştır:
