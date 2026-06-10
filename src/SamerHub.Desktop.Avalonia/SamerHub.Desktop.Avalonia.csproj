@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>..\..\Resources\logo.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SamerHub.Core\SamerHub.Core.csproj" />
+    <ProjectReference Include="..\SamerHub.Fiscal\SamerHub.Fiscal.csproj" />
+    <ProjectReference Include="..\SamerHub.Pos\SamerHub.Pos.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="..\..\Resources\logo.ico" Link="Assets\logo.ico" />
+    <AvaloniaResource Include="..\..\Resources\logo.png" Link="Assets\logo.png" />
+  </ItemGroup>
+
+</Project>
