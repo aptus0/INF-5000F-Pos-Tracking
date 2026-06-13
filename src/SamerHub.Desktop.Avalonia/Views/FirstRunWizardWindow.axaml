@@ -1,0 +1,52 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SamerHub.Desktop.Avalonia.Views.FirstRunWizardWindow"
+        Title="SAMER Hub Ilk Kurulum"
+        Width="780"
+        Height="640"
+        WindowStartupLocation="CenterScreen">
+  <Grid RowDefinitions="Auto,*,Auto" Margin="24">
+    <StackPanel Grid.Row="0" Spacing="4">
+      <TextBlock Text="Ilk Kurulum Sihirbazi" FontSize="28" FontWeight="Bold"/>
+      <TextBlock Text="Yerel SQLite hazir gelir. Hazir bir MySQL sunucunuz varsa bu ekrandan sonradan ona baglanabilirsiniz." Foreground="#6A7682"/>
+    </StackPanel>
+
+    <TabControl Grid.Row="1" Margin="0,20,0,20">
+      <TabItem Header="Veritabani">
+        <Border Classes="card">
+          <StackPanel Spacing="12">
+            <TextBlock Text="Veritabani Modu"/>
+            <RadioButton x:Name="SqliteRadio" IsChecked="True" Content="Yerel SQLite - Onerilen"/>
+            <RadioButton x:Name="MySqlRadio" Content="Harici MySQL Sunucu - Gelismis"/>
+            <TextBox x:Name="HostTextBox" Watermark="Host" Text="localhost"/>
+            <TextBox x:Name="PortTextBox" Watermark="Port" Text="3306"/>
+            <TextBox x:Name="DatabaseTextBox" Watermark="Database" Text="samerhub"/>
+            <TextBox x:Name="UsernameTextBox" Watermark="User"/>
+            <TextBox x:Name="PasswordTextBox" Watermark="Password"/>
+          </StackPanel>
+        </Border>
+      </TabItem>
+      <TabItem Header="POS">
+        <Border Classes="card">
+          <StackPanel Spacing="12">
+            <TextBlock Text="POS yapisi local service uzerinden yonetilir."/>
+            <TextBlock Text="Desktop acildiginda once servis health kontrol edilir, sonra POS baglantisi test edilebilir." TextWrapping="Wrap" Foreground="#6A7682"/>
+          </StackPanel>
+        </Border>
+      </TabItem>
+      <TabItem Header="Son">
+        <Border Classes="card">
+          <StackPanel Spacing="12">
+            <CheckBox x:Name="SkipWizardCheckBox" Content="Bu sihirbazi bir daha gosterme"/>
+            <TextBlock Text="Kayit sonrasinda desktop shell acilmaya hazir olacak." Foreground="#6A7682"/>
+          </StackPanel>
+        </Border>
+      </TabItem>
+    </TabControl>
+
+    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+      <Button Content="Kapat" Click="Close_Click"/>
+      <Button Classes="primary" Content="Kaydet" Click="Save_Click"/>
+    </StackPanel>
+  </Grid>
+</Window>
