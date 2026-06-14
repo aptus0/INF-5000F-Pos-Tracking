@@ -1,0 +1,385 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SamerHub.Desktop.Avalonia.ViewModels"
+        x:Class="SamerHub.Desktop.Avalonia.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="SAMER Hub"
+        Icon="/Assets/logo.ico"
+        Width="1500"
+        Height="940"
+        MinWidth="1260"
+        MinHeight="780">
+  <Grid RowDefinitions="Auto,*,Auto">
+    <Border Grid.Row="0" Background="White" BorderBrush="#ECE7DF" BorderThickness="0,0,0,1" Padding="26,18">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <StackPanel Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+          <Border Width="54" Height="54" CornerRadius="18" Background="#FFF3E8" BorderBrush="#FFD1A8" BorderThickness="1">
+            <Viewbox Stretch="Uniform" Margin="8">
+              <Canvas Width="64" Height="64">
+                <Path Stroke="#FF7A00" StrokeThickness="6" Data="M45,8 L20,8 L8,18 L8,28 L33,40 L33,50 L20,50 L8,40" />
+                <Path Stroke="#FF7A00" StrokeThickness="6" Data="M19,14 L44,14 L56,24 L56,34 L31,22 L31,12 L44,12 L56,22" />
+              </Canvas>
+            </Viewbox>
+          </Border>
+          <StackPanel Spacing="2" VerticalAlignment="Center">
+            <TextBlock Text="SAMER Hub" FontSize="28" FontWeight="Bold" Foreground="#1F2933"/>
+            <TextBlock Text="Kasa • Masa • Paket Servis • POS • YNÖKC" Foreground="#6A7682" FontSize="14"/>
+          </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="18" Margin="24,0,24,0" VerticalAlignment="Center">
+          <TextBlock Text="Dashboard" Foreground="#4A5560"/>
+          <TextBlock Text="Masalar" Foreground="#4A5560"/>
+          <TextBlock Text="Paket Siparişler" Foreground="#4A5560"/>
+          <TextBlock Text="Kasa" Foreground="#4A5560"/>
+          <TextBlock Text="Ürünler" Foreground="#4A5560"/>
+          <TextBlock Text="Mutfak" Foreground="#4A5560"/>
+          <TextBlock Text="Raporlar" Foreground="#4A5560"/>
+          <TextBlock Text="Ayarlar" Foreground="#FF7A00" FontWeight="SemiBold"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Spacing="8" HorizontalAlignment="Right">
+          <Border Classes="card" Padding="12,10">
+            <StackPanel>
+              <TextBlock Text="{Binding ServiceStatus}" FontWeight="SemiBold"/>
+              <TextBlock Text="{Binding ServiceMessage}" Foreground="#6A7682" TextWrapping="Wrap" Width="360"/>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <TabControl Grid.Row="1" Margin="24" Classes="settingsnav" TabStripPlacement="Top">
+      <TabItem Header="Dashboard">
+        <ScrollViewer>
+          <StackPanel Spacing="18">
+            <TextBlock Classes="sectionTitle" Text="Operasyon Ozeti"/>
+            <UniformGrid Columns="4">
+              <Border Classes="card" Margin="0,0,12,0"><StackPanel Spacing="8"><TextBlock Text="Bugunku Ciro" Foreground="#6A7682"/><TextBlock Text="{Binding Dashboard.TodayRevenue, StringFormat='{}{0:N2} TL'}" FontSize="30" FontWeight="Bold"/></StackPanel></Border>
+              <Border Classes="card" Margin="0,0,12,0"><StackPanel Spacing="8"><TextBlock Text="Açık Masa" Foreground="#6A7682"/><TextBlock Text="{Binding Dashboard.OpenTables}" FontSize="30" FontWeight="Bold"/></StackPanel></Border>
+              <Border Classes="card" Margin="0,0,12,0"><StackPanel Spacing="8"><TextBlock Text="Kart Toplamı" Foreground="#6A7682"/><TextBlock Text="{Binding Dashboard.CardTotal, StringFormat='{}{0:N2} TL'}" FontSize="30" FontWeight="Bold"/></StackPanel></Border>
+              <Border Classes="card"><StackPanel Spacing="8"><TextBlock Text="Bekleyen Sipariş" Foreground="#6A7682"/><TextBlock Text="{Binding Dashboard.PendingPackageOrders}" FontSize="30" FontWeight="Bold"/></StackPanel></Border>
+            </UniformGrid>
+            <Grid ColumnDefinitions="3*,2*">
+              <Border Grid.Column="0" Classes="card">
+                <StackPanel Spacing="10">
+                  <TextBlock Text="Son Siparisler" FontSize="18" FontWeight="SemiBold"/>
+                  <ItemsControl ItemsSource="{Binding Dashboard.RecentOrders}">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <Grid ColumnDefinitions="2*,2*,Auto,Auto" Margin="0,4">
+                          <TextBlock Grid.Column="0" Text="{Binding Reference}"/>
+                          <TextBlock Grid.Column="1" Text="{Binding Source}" Foreground="#6A7682"/>
+                          <TextBlock Grid.Column="2" Text="{Binding TotalAmount, StringFormat='{}{0:N2}'}"/>
+                        <TextBlock Grid.Column="3" Text="{Binding Status}" Margin="16,0,0,0" Foreground="#FF7A00"/>
+                        </Grid>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel>
+              </Border>
+              <Border Grid.Column="1" Classes="card">
+                <StackPanel Spacing="10">
+                  <TextBlock Text="Sistem Uyarıları" FontSize="18" FontWeight="SemiBold"/>
+                  <ItemsControl ItemsSource="{Binding Dashboard.Alerts}">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate><TextBlock Text="{Binding .}" Margin="0,4"/></DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel>
+              </Border>
+            </Grid>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+
+      <TabItem Header="Masalar">
+        <Grid ColumnDefinitions="340,*,360">
+          <Border Grid.Column="0" Classes="card">
+            <StackPanel Spacing="12">
+              <TextBlock Text="Masa Listesi" FontSize="18" FontWeight="SemiBold"/>
+              <ListBox ItemsSource="{Binding Tables}" SelectedItem="{Binding SelectedTable}">
+                <ListBox.ItemTemplate>
+                  <DataTemplate>
+                    <Border Padding="10">
+                      <StackPanel Spacing="4">
+                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding Area}" Foreground="#6A7682"/>
+                        <TextBlock Text="{Binding Status}"/>
+                        <TextBlock Text="{Binding ActiveOrderTotal, StringFormat='Aktif hesap: {0:N2} TL'}" Foreground="#6A7682"/>
+                      </StackPanel>
+                    </Border>
+                  </DataTemplate>
+                </ListBox.ItemTemplate>
+              </ListBox>
+              <TextBlock Text="Yeni Masa" FontWeight="SemiBold"/>
+              <TextBox Watermark="Masa Adı" Text="{Binding DraftTable.Name}"/>
+              <TextBox Watermark="Alan" Text="{Binding DraftTable.Area}"/>
+              <TextBox Watermark="Kapasite" Text="{Binding DraftTable.Capacity}"/>
+              <Button Classes="primary" Content="Masa Ekle" Click="CreateTable_Click"/>
+            </StackPanel>
+          </Border>
+
+          <Border Grid.Column="1" Classes="card">
+            <StackPanel Spacing="12">
+              <TextBlock Text="Masa Detayı" FontSize="18" FontWeight="SemiBold"/>
+              <TextBlock Text="{Binding SelectedTable.Name, FallbackValue='Masa seç'}" FontSize="22" FontWeight="Bold"/>
+              <TextBlock Text="{Binding SelectedTable.Area}"/>
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button Classes="primary" Content="Masa Aç" Click="OpenTable_Click"/>
+                <Button Content="Mutfağa Gönder" Click="SendKitchen_Click"/>
+              </StackPanel>
+              <TextBlock Text="Aktif Oturum" FontWeight="SemiBold"/>
+              <TextBlock Text="{Binding SelectedSession.TotalAmount, StringFormat='Toplam: {0:N2} TL'}"/>
+              <ListBox ItemsSource="{Binding SelectedSession.Items}">
+                <ListBox.ItemTemplate>
+                  <DataTemplate>
+                    <Grid ColumnDefinitions="2*,Auto,Auto" Margin="0,4">
+                      <TextBlock Grid.Column="0" Text="{Binding ProductName}"/>
+                      <TextBlock Grid.Column="1" Text="{Binding Quantity}" Margin="12,0,0,0"/>
+                      <TextBlock Grid.Column="2" Text="{Binding UnitPrice, StringFormat='{}{0:N2}'}" Margin="12,0,0,0"/>
+                    </Grid>
+                  </DataTemplate>
+                </ListBox.ItemTemplate>
+              </ListBox>
+            </StackPanel>
+          </Border>
+
+          <Border Grid.Column="2" Classes="card">
+            <StackPanel Spacing="12">
+              <TextBlock Text="Ürünler" FontSize="18" FontWeight="SemiBold"/>
+              <ListBox ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}">
+                <ListBox.ItemTemplate>
+                  <DataTemplate>
+                    <Grid ColumnDefinitions="2*,Auto" Margin="0,4">
+                      <TextBlock Grid.Column="0" Text="{Binding Name}"/>
+                      <TextBlock Grid.Column="1" Text="{Binding UnitPrice, StringFormat='{}{0:N2} TL'}"/>
+                    </Grid>
+                  </DataTemplate>
+                </ListBox.ItemTemplate>
+              </ListBox>
+              <Button Classes="primary" Content="Seçili Ürünü Ekle" Click="AddProductToSession_Click"/>
+            </StackPanel>
+          </Border>
+        </Grid>
+      </TabItem>
+
+      <TabItem Header="Paket Siparisler">
+        <Border Classes="card">
+          <TextBlock Text="Paket siparişler ikinci fazda derinleşecek; bu milestone’da salon/POS çekirdeği öncelikli." TextWrapping="Wrap"/>
+        </Border>
+      </TabItem>
+
+      <TabItem Header="Kasa">
+        <Grid ColumnDefinitions="2*,*">
+          <Border Grid.Column="0" Classes="card">
+            <StackPanel Spacing="12">
+              <TextBlock Text="Açık Ödemeler" FontSize="18" FontWeight="SemiBold"/>
+              <ListBox ItemsSource="{Binding CashierSessions}" SelectedItem="{Binding SelectedSession}">
+                <ListBox.ItemTemplate>
+                  <DataTemplate>
+                    <Grid ColumnDefinitions="2*,Auto,Auto" Margin="0,4">
+                      <TextBlock Grid.Column="0" Text="{Binding TableName}"/>
+                      <TextBlock Grid.Column="1" Text="{Binding TotalAmount, StringFormat='{}{0:N2} TL'}"/>
+                      <TextBlock Grid.Column="2" Text="{Binding Status}" Margin="12,0,0,0"/>
+                    </Grid>
+                  </DataTemplate>
+                </ListBox.ItemTemplate>
+              </ListBox>
+            </StackPanel>
+          </Border>
+          <Border Grid.Column="1" Classes="card">
+            <StackPanel Spacing="12">
+              <TextBlock Text="Tahsilat" FontSize="18" FontWeight="SemiBold"/>
+              <TextBlock Text="{Binding SelectedSession.TableName, FallbackValue='Oturum seç'}"/>
+              <TextBox Watermark="Nakit Tutar" Text="{Binding CashAmount}"/>
+              <Button Classes="primary" Content="Nakit Tahsilat" Click="PayCash_Click"/>
+              <TextBox Watermark="Kart Tutar" Text="{Binding CardAmount}"/>
+              <Button Content="Kart Tahsilat" Click="PayCard_Click"/>
+              <Button Content="POS Bağlantısını Test Et" Click="TestPosConnection_Click"/>
+              <Button Content="1 TL Test Satis" Click="TestPosSale_Click"/>
+            </StackPanel>
+          </Border>
+        </Grid>
+      </TabItem>
+
+      <TabItem Header="Urunler">
+        <Grid ColumnDefinitions="2*,*">
+          <Border Grid.Column="0" Classes="card">
+            <StackPanel Spacing="12">
+              <TextBlock Text="Ürün Listesi" FontSize="18" FontWeight="SemiBold"/>
+              <ListBox ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}">
+                <ListBox.ItemTemplate>
+                  <DataTemplate>
+                    <Grid ColumnDefinitions="2*,*,Auto,Auto" Margin="0,4">
+                      <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="SemiBold"/>
+                      <TextBlock Grid.Column="1" Text="{Binding CategoryName}" Foreground="#6A7682"/>
+                      <TextBlock Grid.Column="2" Text="{Binding UnitPrice, StringFormat='{}{0:N2} TL'}"/>
+                      <TextBlock Grid.Column="3" Text="{Binding KdvOrani, StringFormat='%{0}'}" Margin="12,0,0,0"/>
+                    </Grid>
+                  </DataTemplate>
+                </ListBox.ItemTemplate>
+              </ListBox>
+            </StackPanel>
+          </Border>
+          <Border Grid.Column="1" Classes="card">
+            <StackPanel Spacing="12">
+              <TextBlock Text="Yeni / Güncel Ürün" FontSize="18" FontWeight="SemiBold"/>
+              <TextBox Watermark="Ürün Adı" Text="{Binding DraftProduct.Name}"/>
+              <TextBox Watermark="Kategori" Text="{Binding DraftProduct.CategoryName}"/>
+              <TextBox Watermark="Fiyat" Text="{Binding DraftProduct.UnitPrice}"/>
+              <TextBox Watermark="KDV Oranı" Text="{Binding DraftProduct.KdvOrani}"/>
+              <TextBox Watermark="YNÖKC Departmanı" Text="{Binding DraftProduct.YnokcDepartmani}"/>
+              <TextBox Watermark="Birim Tipi" Text="{Binding DraftProduct.UnitType}"/>
+              <TextBox Watermark="Mali Ürün Kodu" Text="{Binding DraftProduct.MaliUrunKodu}"/>
+              <Button Classes="primary" Content="Ürünü Kaydet" Click="SaveProduct_Click"/>
+            </StackPanel>
+          </Border>
+        </Grid>
+      </TabItem>
+
+      <TabItem Header="Mutfak">
+        <Border Classes="card">
+          <StackPanel Spacing="10">
+            <TextBlock Classes="sectionTitle" Text="Mutfak"/>
+            <TextBlock Text="Mutfak ekranı ikinci fazda ticket board olarak derinleşecek. Bu milestone’da mutfağa gönderim masa oturumundan gerçek çalışır." TextWrapping="Wrap" Foreground="#6A7682"/>
+          </StackPanel>
+        </Border>
+      </TabItem>
+
+      <TabItem Header="Raporlar">
+        <Border Classes="card">
+          <StackPanel Spacing="10">
+            <TextBlock Classes="sectionTitle" Text="Raporlar"/>
+            <TextBlock Text="İkinci fazda detay raporlar eklenecek; dashboard özeti ve ödemeler şu anda gerçek DB verisinden üretiliyor." TextWrapping="Wrap" Foreground="#6A7682"/>
+          </StackPanel>
+        </Border>
+      </TabItem>
+
+      <TabItem Header="Ayarlar">
+        <ScrollViewer>
+          <StackPanel Spacing="20">
+            <TextBlock Classes="sectionTitle" Text="Ayarlar"/>
+            <TabControl>
+              <TabItem Header="Genel">
+                <Border Classes="card">
+                  <StackPanel Spacing="12">
+                    <TextBlock Text="İlk açılış sihirbazı ve canlı ekran yenileme" Foreground="#6A7682"/>
+                    <Button Content="Wizard'i tekrar goster" Click="OpenWizard_Click"/>
+                    <Button Content="Ekrani yenile" Click="Reload_Click"/>
+                  </StackPanel>
+                </Border>
+              </TabItem>
+              <TabItem Header="POS">
+                <Border Classes="card">
+                  <StackPanel Spacing="10">
+                    <CheckBox Content="POS Kullanimi Aktif" IsChecked="{Binding PosSettings.IsEnabled}"/>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                      <TextBox Grid.Row="0" Grid.Column="0" Margin="0,0,6,6" Watermark="Baglanti Modu" Text="{Binding PosSettings.Mode}"/>
+                      <TextBox Grid.Row="0" Grid.Column="1" Margin="6,0,0,6" Watermark="PC IP" Text="{Binding PosSettings.PcIpAddress}"/>
+                      <TextBox Grid.Row="1" Grid.Column="0" Margin="0,6,6,6" Watermark="POS IP" Text="{Binding PosSettings.PosIpAddress}"/>
+                      <TextBox Grid.Row="1" Grid.Column="1" Margin="6,6,0,6" Watermark="POS Port" Text="{Binding PosSettings.PosPort}"/>
+                      <TextBox Grid.Row="2" Grid.Column="0" Margin="0,6,6,6" Watermark="Timeout" Text="{Binding PosSettings.TimeoutSeconds}"/>
+                      <TextBox Grid.Row="2" Grid.Column="1" Margin="6,6,0,6" Watermark="Baglanti Tipi" Text="{Binding PosSettings.ConnectionType}"/>
+                      <TextBox Grid.Row="3" Grid.Column="0" Margin="0,6,6,6" Watermark="Terminal ID" Text="{Binding PosSettings.TerminalId}"/>
+                      <TextBox Grid.Row="3" Grid.Column="1" Margin="6,6,0,6" Watermark="Merchant ID" Text="{Binding PosSettings.MerchantId}"/>
+                      <TextBox Grid.Row="4" Grid.Column="0" Margin="0,6,6,0" Watermark="Protokol" Text="{Binding PosSettings.Protocol}"/>
+                      <TextBox Grid.Row="4" Grid.Column="1" Margin="6,6,0,0" Watermark="Retry Count" Text="{Binding PosSettings.RetryCount}"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                      <CheckBox Content="CRC / Checksum" IsChecked="{Binding PosSettings.ChecksumEnabled}"/>
+                      <CheckBox Content="Raw TCP Loglama" IsChecked="{Binding PosSettings.RawTcpLoggingEnabled}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                      <Button Content="PC IP Algıla" Click="DetectLocalIp_Click"/>
+                      <Button Content="Bağlantıyı Test Et" Click="TestPosConnection_Click"/>
+                      <Button Content="1 TL Test Satış" Click="TestPosSale_Click"/>
+                    </StackPanel>
+                  </StackPanel>
+                </Border>
+              </TabItem>
+              <TabItem Header="Yazici">
+                <Border Classes="card">
+                  <StackPanel Spacing="12">
+                    <TextBox Watermark="Mutfak Yazicisi" Text="{Binding PrinterSettings.KitchenPrinterName}"/>
+                    <TextBox Watermark="Kasa Yazicisi" Text="{Binding PrinterSettings.CashPrinterName}"/>
+                    <TextBox Watermark="Paket Yazicisi" Text="{Binding PrinterSettings.DeliveryPrinterName}"/>
+                  </StackPanel>
+                </Border>
+              </TabItem>
+              <TabItem Header="Platformlar">
+                <Border Classes="card">
+                  <StackPanel Spacing="14">
+                    <CheckBox Content="Trendyol Go Aktif" IsChecked="{Binding PlatformSettings.TrendyolGo.IsEnabled}"/>
+                    <TextBox Watermark="Trendyol Base Url" Text="{Binding PlatformSettings.TrendyolGo.BaseUrl}"/>
+                    <CheckBox Content="Getir Aktif" IsChecked="{Binding PlatformSettings.Getir.IsEnabled}"/>
+                    <TextBox Watermark="Getir Base Url" Text="{Binding PlatformSettings.Getir.BaseUrl}"/>
+                    <CheckBox Content="Yemeksepeti Aktif" IsChecked="{Binding PlatformSettings.Yemeksepeti.IsEnabled}"/>
+                    <TextBox Watermark="Yemeksepeti Base Url" Text="{Binding PlatformSettings.Yemeksepeti.BaseUrl}"/>
+                  </StackPanel>
+                </Border>
+              </TabItem>
+              <TabItem Header="Mali Fis / YNOKC">
+                <Border Classes="card">
+                  <StackPanel Spacing="12">
+                    <CheckBox Content="YNOKC Mali Fis Modu Aktif" IsChecked="{Binding FiscalSettings.IsEnabled}"/>
+                    <TextBox Watermark="Mod" Text="{Binding FiscalSettings.Mode}"/>
+                    <TextBox Watermark="Tetikleme Zamani" Text="{Binding FiscalSettings.ReceiptTrigger}"/>
+                    <TextBlock Text="KDV Eşleşmeleri" FontWeight="SemiBold"/>
+                    <ItemsControl ItemsSource="{Binding VatMappings}">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate><TextBlock Text="{Binding VatRate, StringFormat='%{0}'}" /></DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="{Binding FiscalSettings.LastDeviceResponse}" Foreground="#6A7682" TextWrapping="Wrap"/>
+                    <Button Content="Test Mali Fis" Click="TestFiscal_Click"/>
+                  </StackPanel>
+                </Border>
+              </TabItem>
+              <TabItem Header="Veritabanı">
+                <Border Classes="card">
+                  <StackPanel Spacing="12">
+                    <TextBox Watermark="Provider" Text="{Binding DatabaseSettings.Provider}"/>
+                    <TextBox Watermark="Connection String" Text="{Binding DatabaseSettings.ConnectionString}"/>
+                    <TextBox Watermark="Host" Text="{Binding DatabaseSettings.Host}"/>
+                    <TextBox Watermark="Port" Text="{Binding DatabaseSettings.Port}"/>
+                    <TextBox Watermark="Database" Text="{Binding DatabaseSettings.Database}"/>
+                    <TextBox Watermark="User" Text="{Binding DatabaseSettings.Username}"/>
+                    <TextBox Watermark="Password" Text="{Binding DatabaseSettings.Password}"/>
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                      <Button Content="DB Test" Click="TestDatabase_Click"/>
+                      <Button Content="Kaydet" Click="SaveSettings_Click"/>
+                    </StackPanel>
+                  </StackPanel>
+                </Border>
+              </TabItem>
+              <TabItem Header="Servis Durumu">
+                <Border Classes="card">
+                  <StackPanel Spacing="10">
+                    <TextBlock Text="{Binding ServiceStatus}" FontSize="18" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding ServiceMessage}" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding FooterStatus}" Foreground="#6A7682"/>
+                  </StackPanel>
+                </Border>
+              </TabItem>
+            </TabControl>
+            <StackPanel Orientation="Horizontal" Spacing="12">
+              <Button Classes="primary" Content="Ayarları Kaydet" Click="SaveSettings_Click"/>
+              <Button Content="Yeniden Yükle" Click="Reload_Click"/>
+            </StackPanel>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+    </TabControl>
+
+    <Border Grid.Row="2" Background="#1F2933" Padding="20,12">
+      <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto,Auto,Auto">
+        <TextBlock Foreground="#F8F3EA" Text="{Binding FooterStatus}" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="1" Foreground="#D8E2E8" Text="{Binding PosFooter, StringFormat='POS: {0}'}" Margin="20,0,0,0"/>
+        <TextBlock Grid.Column="2" Foreground="#D8E2E8" Text="{Binding InternetFooter, StringFormat='İnternet: {0}'}" Margin="20,0,0,0"/>
+        <TextBlock Grid.Column="3" Foreground="#D8E2E8" Text="{Binding PrinterFooter, StringFormat='Yazıcı: {0}'}" Margin="20,0,0,0"/>
+        <TextBlock Grid.Column="4" Foreground="#D8E2E8" Text="{Binding UserFooter, StringFormat='Kullanıcı: {0}'}" Margin="20,0,0,0"/>
+        <TextBlock Grid.Column="5" Foreground="#D8E2E8" Text="{Binding BranchFooter, StringFormat='Şube: {0}'}" Margin="20,0,0,0"/>
+        <TextBlock Grid.Column="6" Foreground="#D8E2E8" Text="{Binding ClockFooter}" Margin="20,0,0,0"/>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>
